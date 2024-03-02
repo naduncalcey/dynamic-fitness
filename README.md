@@ -12,4 +12,3 @@ The backend relies on Pocketbase to manage and interact with the database. To st
 
 ```bash
 pocketbase serve
-
