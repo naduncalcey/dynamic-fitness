@@ -1,21 +1,28 @@
-import { useEffect, useState } from 'react';
-import { fetchPublicMembers } from './api'; // Ensure this import path matches your project structure
-import { Button } from './components/ui/button';
+import { useState, useEffect } from 'react';
+import { fetchPublicMembers } from './api'; // Make sure this import path matches your project
 
+// Updated Member interface to match the new data structure
 interface Member {
   id: string;
-  Email: string;
-  Name: string;
+  first_name: string;
+  last_name: string;
+  member_no: string;
+  membership: string;
+  status: boolean;
+  created: string;
+  updated: string;
 }
 
 const App = () => {
   const [members, setMembers] = useState<Member[]>([]);
 
+  // Function to load members from the backend
   const loadMembers = async () => {
     const fetchedMembers = await fetchPublicMembers();
     setMembers(fetchedMembers);
   };
 
+  // Load members on component mount
   useEffect(() => {
     loadMembers();
   }, []);
@@ -23,11 +30,11 @@ const App = () => {
   return (
     <div>
       <h1>Members</h1>
-      <Button onClick={loadMembers}>Refresh Data</Button>
+      <button onClick={loadMembers}>Refresh Members</button>
       <ul>
         {members.map((member) => (
           <li key={member.id}>
-            {member.Name} - {member.Email}
+            {member.first_name} {member.last_name} - Member No: {member.member_no}, Membership: {member.membership}, Status: {member.status ? 'Active' : 'Inactive'}
           </li>
         ))}
       </ul>
